@@ -65,14 +65,15 @@ If you prefer using standard Express middleware, you can use `validateRequest`.
 ```typescript
 import { validateRequest } from '@express-kit/validator';
 
-const schema = {
-  body: z.object({
+const schema bodySchema = z.object({
     email: z.string().email(),
   }),
-};
 
-app.post('/login', validateRequest(schema), (req, res) => {
+
+app.post('/login', validateRequest({ body: bodySchema}), (req, res) => {
   // Manual type casting might be needed here for full TS support
+  const body = req.body as z.infer<typeof bodySchema>
+  console.log(body);
   res.json({ message: 'Valid request!' });
 });
 ```
