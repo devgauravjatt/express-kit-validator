@@ -1,3 +1,3 @@
 # Express Kit Validator
 
-A lightning-fast, express validator using zod (body, query, params)
+A lightning-fast, express validator using zod (body, query, params) 
