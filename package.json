@@ -1,6 +1,6 @@
 {
   "name": "@express-kit/validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "A lightning-fast, express validator using zod (body, query, params)",
   "author": "devgauravjatt",
@@ -54,7 +54,7 @@
     "typescript": "^6.0.2",
     "vitest": "^4.1.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "zod": "^4.3.6"
   }
 }
