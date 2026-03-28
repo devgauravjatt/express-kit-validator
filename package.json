@@ -1,0 +1,57 @@
+{
+  "name": "@express-kit/validator",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A lightning-fast, express validator using zod (body, query, params)",
+  "author": "devgauravjatt",
+  "license": "MIT",
+  "keywords": [
+    "express",
+    "validator",
+    "zod",
+    "validation",
+    "lightweight"
+  ],
+  "homepage": "https://github.com/devgauravjatt/express-kit-validator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devgauravjatt/express-kit-validator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devgauravjatt/express-kit-validator/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "types": "tsc --noEmit",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.57.7",
+    "@rslib/core": "^0.20.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.12.0",
+    "@types/supertest": "^7.2.0",
+    "express": "^5.2.1",
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "supertest": "^7.2.2",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.2"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}
