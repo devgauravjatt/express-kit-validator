@@ -5,6 +5,9 @@
   "description": "A lightning-fast, express validator using zod (body, query, params)",
   "author": "devgauravjatt",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "express",
     "validator",
