@@ -1,6 +1,6 @@
 {
   "name": "@express-kit/validator",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "type": "module",
   "description": "A lightning-fast, express validator using zod (body, query, params)",
   "author": "devgauravjatt",
