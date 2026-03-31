@@ -76,7 +76,7 @@ If you prefer using standard Express middleware, you can use `validateRequest`.
 ```typescript
 import { validateRequest } from '@express-kit/validator';
 
-const schema bodySchema = z.object({
+const bodySchema = z.object({
     name: z.string('Name is required'),
     age: z.number('Age is required'),
     address: z.object(
@@ -88,12 +88,12 @@ const schema bodySchema = z.object({
     ),
   }),
 
-   querySchema = z.object({
+  const querySchema = z.object({
     search: z.string('Search is required'),
     page: z.coerce.number('Page is required'),
   })
 
-  paramsSchema = z.object({
+ const paramsSchema = z.object({
     id: z.string('ID is required'),
   }),
 
@@ -120,7 +120,7 @@ When validation fails, `@express-kit/validator` returns a `400 Bad Request` with
       "address": { "street": "Street is required" }
     },
     "query": {
-      "page": ["Expected number, received string"]
+      "page": "Expected number, received string"
     }
   }
 }
