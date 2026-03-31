@@ -1,6 +1,7 @@
 // oxlint-disable typescript/no-empty-object-type
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { z, ZodError } from 'zod';
+import mapZodErrors from './zodMap';
 
 type SchemaConfig = {
   body?: z.ZodTypeAny;
@@ -18,13 +19,7 @@ type TypedRequest<T extends SchemaConfig> = Request<
 
 // 🔥 format errors
 const formatZodErrors = (error: ZodError) => {
-  const formatted: Record<string, string[]> = {};
-
-  for (const issue of error.issues) {
-    const key = issue.path.join('.') || 'root';
-    if (!formatted[key]) formatted[key] = [];
-    formatted[key].push(issue.message);
-  }
+  const formatted = mapZodErrors(error.issues);
 
   return formatted;
 };
@@ -68,7 +63,7 @@ export const appRoute =
       // 🔥 return structured errors
       if (Object.keys(errors).length > 0) {
         return res.status(400).json({
-          message: 'Validation failed',
+          error: 'Validation failed',
           errors,
         });
       }

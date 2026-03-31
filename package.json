@@ -1,6 +1,6 @@
 {
   "name": "@express-kit/validator",
-  "version": "0.1.1",
+  "version": "0.5.0",
   "type": "module",
   "description": "A lightning-fast, express validator using zod (body, query, params)",
   "author": "devgauravjatt",
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/devgauravjatt/express-kit-validator#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devgauravjatt/express-kit-validator.git"
+    "url": "git+https://github.com/devgauravjatt/express-kit-validator"
   },
   "bugs": {
     "url": "https://github.com/devgauravjatt/express-kit-validator/issues"

@@ -30,28 +30,39 @@ import { appRoute } from '@express-kit/validator';
 const app = express();
 app.use(express.json());
 
-const userSchema = {
+const schemas = {
   body: z.object({
-    name: z.string().min(2),
-    age: z.number().int().positive(),
+    name: z.string('Name is required'),
+    age: z.number('Age is required'),
+    address: z.object(
+      {
+        city: z.string('City is required'),
+        street: z.string('Street is required'),
+      },
+      'Address is required',
+    ),
   }),
   query: z.object({
-    role: z.enum(['admin', 'user']).optional(),
+    search: z.string('Search is required'),
+    page: z.coerce.number('Page is required'),
   }),
   params: z.object({
-    id: z.string().uuid(),
+    id: z.string('ID is required'),
   }),
 };
 
 app.post(
-  '/users/:id',
-  appRoute(userSchema)((req, res) => {
+  '/items/:id',
+  appRoute(schemas)((req, res) => {
     // req.body, req.query, and req.params are fully typed!
-    const { name, age } = req.body;
+    const { name, age, address } = req.body;
     const { id } = req.params;
-    const { role } = req.query;
+    const { search, page } = req.query;
 
-    res.json({ message: `User ${name} (ID: ${id}) created with role: ${role}` });
+    res.json({
+      message: `Item ${name} (ID: ${id}) found with search: ${search}, page: ${page}`,
+      address,
+    });
   }),
 );
 
@@ -66,16 +77,33 @@ If you prefer using standard Express middleware, you can use `validateRequest`.
 import { validateRequest } from '@express-kit/validator';
 
 const schema bodySchema = z.object({
-    email: z.string().email(),
+    name: z.string('Name is required'),
+    age: z.number('Age is required'),
+    address: z.object(
+      {
+        city: z.string('City is required'),
+        street: z.string('Street is required'),
+      },
+      'Address is required',
+    ),
+  }),
+
+   querySchema = z.object({
+    search: z.string('Search is required'),
+    page: z.coerce.number('Page is required'),
+  })
+
+  paramsSchema = z.object({
+    id: z.string('ID is required'),
   }),
 
 
-app.post('/login', validateRequest({ body: bodySchema}), (req, res) => {
-  // Manual type casting might be needed here for full TS support
-  const body = req.body as z.infer<typeof bodySchema>
-  console.log(body);
-  res.json({ message: 'Valid request!' });
-});
+  app.post('/login', validateRequest({ body: bodySchema, query: querySchema, params: paramsSchema}), (req, res) => {
+    // Manual type casting might be needed here for full TS support
+    const body = req.body as z.infer<typeof bodySchema>
+    console.log(body);
+    res.json({ message: 'Valid request!' });
+  });
 ```
 
 ## Validation Error Format
@@ -84,11 +112,12 @@ When validation fails, `@express-kit/validator` returns a `400 Bad Request` with
 
 ```json
 {
-  "message": "Validation failed",
+  "error": "Validation failed",
   "errors": {
     "body": {
-      "email": ["Invalid email format"],
-      "age": ["Required"]
+      "name": "Name is required",
+      "age": "Age is required",
+      "address": { "street": "Street is required" }
     },
     "query": {
       "page": ["Expected number, received string"]

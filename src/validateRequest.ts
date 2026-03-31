@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { z, ZodError } from 'zod';
+import mapZodErrors from './zodMap';
 
 type SchemaConfig = {
   body?: z.ZodTypeAny;
@@ -7,14 +8,9 @@ type SchemaConfig = {
   params?: z.ZodTypeAny;
 };
 
+// 🔥 format errors
 const formatZodErrors = (error: ZodError) => {
-  const formatted: Record<string, string[]> = {};
-
-  for (const issue of error.issues) {
-    const key = issue.path.join('.') || 'root';
-    if (!formatted[key]) formatted[key] = [];
-    formatted[key].push(issue.message);
-  }
+  const formatted = mapZodErrors(error.issues);
 
   return formatted;
 };
@@ -50,7 +46,7 @@ export const validateRequest = (schemas: SchemaConfig): RequestHandler => {
 
       if (Object.keys(errors).length > 0) {
         return res.status(400).json({
-          message: 'Validation failed',
+          error: 'Validation failed',
           errors,
         });
       }
